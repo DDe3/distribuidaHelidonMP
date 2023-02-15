@@ -1,0 +1,11 @@
+server:
+    port: 8080
+javax:
+    sql:
+        DataSource:
+            distribuidaDataSource:
+                dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+                dataSource:
+                    url: jdbc:postgresql://localhost:5432/distribuida
+                    user: dde3
+                    password: 1234
