@@ -18,7 +18,6 @@ public class MetricController {
 
     @Inject
     @Metric(name = "endpoint_counter")
-
     private Counter counter;
 
     @Path("timed")
