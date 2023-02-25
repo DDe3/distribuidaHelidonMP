@@ -4,6 +4,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -15,20 +17,31 @@ import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
+
 import com.distribuida.auth.service.IUsuarioService;
 import com.distribuida.auth.to.UsuarioTo;
+import com.google.gson.Gson;
+
+import io.helidon.microprofile.cors.CrossOrigin;
 
 import javax.ws.rs.core.MediaType;
 import static javax.ws.rs.core.Response.ok;
-
 
 
 @RequestScoped
 @Path("/usuarios")
 public class UsuarioRestController {
 
+
+    private static final Gson gson = new Gson();
     @Inject
     private IUsuarioService usuarioService;
+
+
+    @OPTIONS
+    @CrossOrigin()
+    public void options() {
+    }
 
     @Counted(unit = MetricUnits.NONE,
        name = "num_registro",
@@ -45,7 +58,7 @@ public class UsuarioRestController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUsuario(UsuarioTo usuario) {
-        return ok(this.usuarioService.registerUsuario(usuario)).build();
+        return ok(gson.toJson(this.usuarioService.registerUsuario(usuario))).build();
     }
 
     @Counted(unit = MetricUnits.NONE,
@@ -63,7 +76,7 @@ public class UsuarioRestController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response authenticateUsuario(UsuarioTo usuario) {
-        return ok(this.usuarioService.authenticateUsuario(usuario)).build();
+        return ok(gson.toJson(this.usuarioService.authenticateUsuario(usuario))).build();
     }
 
 
@@ -82,7 +95,7 @@ public class UsuarioRestController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePassword(UsuarioTo usuario) {
-        return ok(this.usuarioService.updatePasswordFromUsuario(usuario)).build();
+        return ok(gson.toJson(this.usuarioService.updatePasswordFromUsuario(usuario))).build();
     }
     
 
@@ -100,7 +113,7 @@ public class UsuarioRestController {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsuarios() {
-        return ok(this.usuarioService.getAllUsuarios()).build();
+        return ok(gson.toJson(this.usuarioService.getAllUsuarios())).build();
     }
 
     @Counted(unit = MetricUnits.NONE,
@@ -116,6 +129,6 @@ public class UsuarioRestController {
     @PUT
     @Path("/{username}/delete")
     public Response deleteUsuario(@PathParam("username") String username) {
-        return ok(this.usuarioService.deleteUsuario(username)).build();
+        return ok(gson.toJson(this.usuarioService.deleteUsuario(username))).build();
     }
 }
