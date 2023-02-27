@@ -47,6 +47,10 @@
             <artifactId>helidon-microprofile-tests-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.helidon.microprofile.jwt</groupId>
+            <artifactId>helidon-microprofile-jwt-auth</artifactId>
+        </dependency>
 
 
 

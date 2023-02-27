@@ -11,12 +11,16 @@ import com.distribuida.auth.metric.MetricController;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+import org.eclipse.microprofile.auth.LoginConfig;
+
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  *
  */
+@LoginConfig(authMethod = "MP-JWT")
 @ApplicationPath("/authapi/v1")
 @ApplicationScoped
 public class AuthRestApplication extends Application {
