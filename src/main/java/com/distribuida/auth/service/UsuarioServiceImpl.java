@@ -2,6 +2,8 @@ package com.distribuida.auth.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,8 +26,31 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public String registerUsuario(UsuarioTo usuario) {
-        String response = usuarioRepo.insertUsuario(usuarioFromUsuarioTo(usuario));
-        return response;
+        if (!validateEmail(usuario.username)) {
+            return "Mail no válido";
+        } else {
+            if (!validatePassword(usuario.password)) {
+                return "La contraseña debe tener al menos 6 caracteres y una mayuscula";
+            }
+            String response = usuarioRepo.insertUsuario(usuarioFromUsuarioTo(usuario));
+            return response;
+        }
+
+        
+    }
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    String VALID_PASSWORD_PATTERN = "(?=.*[A-Z]).{6,}";
+
+    private boolean validateEmail(String emailStr) {
+            Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+            return matcher.matches();
+    }
+
+    private boolean validatePassword(String password) {
+        return password.matches(VALID_PASSWORD_PATTERN);
     }
 
     @Override

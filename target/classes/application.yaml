@@ -7,6 +7,6 @@ javax:
                 dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
                 dataSource:
                     url: jdbc:postgresql://localhost:5432/distribuida
-                    user: dde3
-                    password: 1234
+                    user: postgres
+                    password: root
 
