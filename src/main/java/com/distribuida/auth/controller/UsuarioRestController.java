@@ -4,7 +4,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,12 +16,12 @@ import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
-
 import com.distribuida.auth.service.IUsuarioService;
 import com.distribuida.auth.to.UsuarioTo;
 import com.google.gson.Gson;
 
 import io.helidon.microprofile.cors.CrossOrigin;
+import io.helidon.security.annotations.Authenticated;
 
 import javax.ws.rs.core.MediaType;
 import static javax.ws.rs.core.Response.ok;
@@ -60,7 +59,7 @@ public class UsuarioRestController {
     public Response registerUsuario(UsuarioTo usuario) {
         return ok(gson.toJson(this.usuarioService.registerUsuario(usuario))).build();
     }
-
+    
     @Counted(unit = MetricUnits.NONE,
        name = "num_authenticate",
        absolute = true,
@@ -80,6 +79,7 @@ public class UsuarioRestController {
     }
 
 
+    @Authenticated
     @Counted(unit = MetricUnits.NONE,
        name = "num_update",
        absolute = true,

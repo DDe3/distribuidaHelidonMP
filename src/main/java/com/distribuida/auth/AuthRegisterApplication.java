@@ -12,6 +12,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import org.eclipse.microprofile.auth.LoginConfig;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,10 +20,10 @@ import java.util.Set;
 /**
  *
  */
-
-@ApplicationPath("/authapi/v1")
+@LoginConfig(authMethod = "MP-JWT")
+@ApplicationPath("/authapi/v2")
 @ApplicationScoped
-public class AuthRestApplication extends Application {
+public class AuthRegisterApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {

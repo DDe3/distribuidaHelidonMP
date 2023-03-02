@@ -14,13 +14,13 @@ import com.distribuida.auth.to.UsuarioTo;
 
 
 
+
+
 @ApplicationScoped
 public class UsuarioServiceImpl implements IUsuarioService {
 
-
     @Inject
     private IUsuarioRepository usuarioRepo;
-
 
     @Override
     public String registerUsuario(UsuarioTo usuario) {
